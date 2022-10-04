@@ -1,0 +1,22 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+void main() {
+  pid_t pid, pid_hijo;
+  
+  
+  // Se crea un proceso hijo, la función fork() devuelve:
+  // un valor negativo -> si se produce cualquier error
+  // 0 -> si estamos en el proceso hijo
+  // un valor positivo (pid del hijo) -> si estamos en el proceso padre
+
+  pid = fork();
+  printf ("Alejandro Sanz ");
+
+  printf ("Soy el padre mi pid es %d\n",getppid());
+  printf ("El id del hijo es %d\n",getpid());
+  
+}

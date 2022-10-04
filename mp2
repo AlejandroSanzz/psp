@@ -1,0 +1,41 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+void main() {
+  //Se definen dos variables de tipo pid_t para almacenar los pids de los procesos
+  pid_t pid, pid_hijo;
+  
+  
+  // Se crea un proceso hijo, la función fork() devuelve:
+  // un valor negativo -> si se produce cualquier error
+  // 0 -> si estamos en el proceso hijo
+  // un valor positivo (pid del hijo) -> si estamos en el proceso padre
+
+  
+  
+     
+  pid = fork();
+  if (pid==0)
+  {
+     
+     //Estamos en el proceso hijo//
+     printf ("Soy el P3 y mi pid es: %d\n",getpid());
+     printf ("Mi padre es el proceso: %d\n",getppid());
+  }
+  else
+  {
+     
+     //Estamos en el proceso padre//
+     wait(NULL);
+     printf ("Mi pid es el proceso: %d\n",getppid());
+     printf ("Soy el P1 y mi hijo es: %d\n",getpid());
+     
+     printf ("Soy el P2 y mi pid es: %d\n",getpid());
+     printf ("Mi padre es el proceso: %d\n",getppid());
+  }
+
+  exit(0);
+}

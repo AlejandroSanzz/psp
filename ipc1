@@ -2,11 +2,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h> 
+#include <time.h>
 
 void main(){
 
+     time_t hora;
+     char *fecha;
+     
+     time(&hora);
+     fecha=ctime(&hora);
      int fd[2]; 
-     char buffer[30];
+     char buffer[50];
      pid_t pid;
     
      // Creamos el pipe
@@ -15,13 +21,14 @@ void main(){
      //Se crea un proceso hijo
      pid = fork();
 
-     if (pid==0)
+     if (pid!=0)
      
      {
                 close(fd[0]); // Cierra el descriptor de lectura
-                printf("Soy el proceso hijo con PID %d\n ",getpid());
-                read(fd[0],buffer, 50);
-                printf ("%s",buffer);
+                              
+                write(fd[1], fecha, 50); 
+                
+                
      
      }
      
@@ -30,9 +37,10 @@ void main(){
      {
                  
                 close(fd[1]); // Cierra el descriptor de lectura
-                wait(NULL);              
-                write(fd[1], "110", 50); 
-                
+                wait(NULL);
+                printf("Soy el proceso hijo con PID %d\n ",getpid());
+                read(fd[0],buffer, 50);
+                printf ("\t Fecha/hora: %s \n",buffer);
     
      }
      

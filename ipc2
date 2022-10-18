@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h> 
+#include <string.h>
+
+void main(){
+
+     
+     int fd[2]; 
+     char buffer[50];
+     pid_t pid;
+    
+     // Creamos el pipe
+     pipe(fd); 
+     
+     //Se crea un proceso hijo
+     pid = fork();
+
+     if (pid!=0)
+     
+     {
+                close(fd[0]); // Cierra el descriptor de lectura
+                              
+                write(fd[1], 50); 
+                
+                
+     
+     }
+     
+     else
+     
+     {
+                 
+                close(fd[1]); // Cierra el descriptor de lectura
+                wait(NULL);
+                printf("Soy el proceso hijo con PID %d\n ",getpid());
+                read(fd[0],buffer, 50);
+                printf ("\t Numero a sumar: 20 %s \n",buffer);
+                printf ("\t Numero a sumar: 40 %s \n",buffer);
+                printf ("\t Numero a sumar: 30 %s \n",buffer);
+                printf ("\t Recibido caracter + %s \n",buffer);
+                printf ("\t La suma total es igual a: %s \n",buffer);
+    
+     }
+     
+        
+}
